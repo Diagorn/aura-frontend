@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Aura — веб-приложение трекера эмоций: отмечайте эмоции, их факторы и события, а также ведите справочники под себя."
+    />
+    <title>Aura — трекер эмоций</title>
+    <script>
+      // Применяем сохранённую тему до первой отрисовки, чтобы не было вспышки
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('aura-theme')
+          var theme =
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : window.matchMedia('(prefers-color-scheme: light)').matches
+                ? 'light'
+                : 'dark'
+          document.documentElement.classList.toggle('dark', theme === 'dark')
+        } catch (e) {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
