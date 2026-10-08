@@ -337,3 +337,12 @@ export default defineConfig({
 - [TypeScript Official Documentation](https://www.typescriptlang.org/)
 - [React Router Documentation](https://reactrouter.com/)
 - [Zustand Documentation](https://github.com/pmndrs/zustand)
+
+## Git (обязательное правило)
+
+- Все файлы, которые добавлены, изменены или удалены в ходе работы, **обязаны** быть
+  добавлены в git (`git add`) и закоммичены.
+- **НИЧЕГО НЕ ПУШИТЬ**, пока пользователь явно не попросит.
+- Если пользователь попросит — можно запушить и создать МР (pull request).
+- Все пуш-и идут **СТРОГО в новые ветки**, из которых потом создаётся МР в `main`.
+  Пушить напрямую в `main` запрещено.
