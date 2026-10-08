@@ -108,6 +108,15 @@ html {
   }
 }
 
+/* Нативный попап <select>: Chromium наследует фон опций от селекта, а у нас тот
+   полупрозрачно-белый (bg-card) — в тёмной теме список получается светлым.
+   Задаём опциям явные цвета темы. */
+select option,
+select optgroup {
+  background-color: var(--bg-soft);
+  color: var(--fg);
+}
+
 body {
   background: var(--bg);
   font-family: var(--font-sans);
