@@ -4,6 +4,7 @@ import { useTranslation } from '../i18n'
 import { useAuth } from '../store/AuthContext'
 import { toApiError } from '../services/problem'
 import { errorMessageOf } from '../lib/errors'
+import { DETECTED_TIMEZONE, timezoneOptions } from '../lib/timezones'
 import { Alert } from '../components/ui/Alert'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
@@ -12,26 +13,16 @@ import { SelectField } from '../components/ui/SelectField'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-/** Полный список IANA-таймзон, детектированная — первой */
-function useTimezoneOptions(): Array<{ value: string; label: string }> {
-  return useMemo(() => {
-    const detected = Intl.DateTimeFormat().resolvedOptions().timeZone
-    const zones = Intl.supportedValuesOf('timeZone')
-    const list = zones.includes(detected) ? zones : [detected, ...zones]
-    return list.map((zone) => ({ value: zone, label: zone }))
-  }, [])
-}
-
 export function RegisterPage() {
   const t = useTranslation()
   const { register } = useAuth()
   const navigate = useNavigate()
-  const timezoneOptions = useTimezoneOptions()
+  const timezoneOptionList = useMemo(timezoneOptions, [])
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [timezone, setTimezone] = useState(() => Intl.DateTimeFormat().resolvedOptions().timeZone)
+  const [timezone, setTimezone] = useState(DETECTED_TIMEZONE)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [formError, setFormError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
@@ -108,7 +99,7 @@ export function RegisterPage() {
             label={t.auth.timezone}
             value={timezone}
             onChange={(event) => setTimezone(event.target.value)}
-            options={timezoneOptions}
+            options={timezoneOptionList}
             error={fieldErrors.timezone}
           />
           <p className="mt-1 text-xs text-muted">{t.auth.timezoneHint}</p>
